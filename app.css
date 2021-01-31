@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+sup {
+    font-size: .7em;
+    padding: .1em .4em;
+    background-color: sienna;
+    color: white;
+    border-radius: 9999px;
+}
+.tab {
+    font-size: 1.2em;
+    width: 150px;
+    padding: .3em;
+    border: 1px solid black;
+    border-radius: .3em;
+    cursor: pointer;
+}
+.tab.current {
+    font-weight: bold;
+    background-color: aqua;
+}
+#libList {
+    margin-top: .7em;
+}
+.movie {
+    cursor: pointer;
+    padding: .6em .2em;
+    border-bottom: 1px dotted silver;
+}
+fieldset {
+    border-color: sienna;
+    border-radius: .6em;
+}
+.cover {
+    margin-left: 1em; margin-right: 1em;
+    height: 300px;
+    border: .2em solid black;
+    box-shadow: .3em .3em .3em gray;
+}
+.current {
+    background-color: papayawhip;
+}
