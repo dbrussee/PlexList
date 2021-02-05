@@ -193,9 +193,10 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
 
     var info = "<b>" + mov.title + "</b>";
     info += " (#" + mov.id + ")";
-    info += "<br>Released in: " + mov.year;
-    info += ", Loaded: " + mov.added;
-    info += "<br>Genre: " + mov.genres;
+    info += "<br>";
+    if (mov.year != "") info += "Released in: " + mov.year + ", ";
+    info += "Loaded: " + mov.added;
+    if (mov.genres != "") info += "<br>Genre: " + mov.genres;
     var dur = mov.duration;
     var hrs = parseInt(dur / (1000 * 60 * 60));
     dur -= (hrs * 1000 * 60 * 60);
@@ -204,14 +205,17 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         mins -= 60;
     }
     var z = (mins < 10 ? "0" : "")
-    info += "<br>Duration: " + hrs + ":" + z + mins;
+    info += "<br>Duration: " + hrs + "hr, " + z + mins + "min";
     if (mov.collections != "") info += "<br>Collection: " + mov.collections;
     if (mov.actors != "") {
         info += "<ul><li>";
         info += mov.actors.split(", ").join("</li><li>");
         info += "</li></ul>";
     }
-    info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
+    
+    if (mov.summary != "") {
+        info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
+    }
     txtloc.innerHTML = info;
     // if (typ == "table") {
         if (prior >= 0) {
