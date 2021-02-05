@@ -205,7 +205,14 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         mins -= 60;
     }
     var z = (mins < 10 ? "0" : "")
-    info += "<br>Duration: " + hrs + "hr, " + z + mins + "min";
+    if (hrs != 0 && mins != 0) {
+        info += "<br>Duration: "
+        if (hrs != 0) {
+            info += hrs + "hr";
+            if (mins != 0) info += " ";
+         }
+         if (mins != 0) info += z + mins + "min";
+    }
     if (mov.collections != "") info += "<br>Collection: " + mov.collections;
     if (mov.actors != "") {
         info += "<ul><li>";
