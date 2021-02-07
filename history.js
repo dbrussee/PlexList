@@ -1,4 +1,5 @@
-movieHistory = [{"title": "The Little Things", "vday": "Sun", "vdate": "01/31/2021", "vtime": "7:34pm", "other": ""},
+movieHistory = [{"title": "Underwater", "vday": "Sat", "vdate": "02/06/2021", "vtime": "6:43pm", "other": ""},
+{"title": "The Little Things", "vday": "Sun", "vdate": "01/31/2021", "vtime": "7:34pm", "other": ""},
 {"title": "Promising Young Woman", "vday": "Sun", "vdate": "01/17/2021", "vtime": "2:27pm", "other": ""},
 {"title": "News of the World", "vday": "Sat", "vdate": "01/16/2021", "vtime": "7:48pm", "other": ""},
 {"title": "Wander", "vday": "Sat", "vdate": "01/09/2021", "vtime": "2:30pm", "other": ""},
