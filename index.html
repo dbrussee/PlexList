@@ -11,6 +11,7 @@
 <body onload='init()'>
     <table class='tabs'>
         <tr><td id='tabMovies' onclick='setTab("M")' class='tab'>Movies <sup><span id='movieCount'></span></sup></td>
+            <td id='tabTV' onclick='setTab("T")' class='tab'>TV Shows <sup><span id='tvCount'></span></sup></td>
             <td id='tabRecent' onclick='setTab("R")' class='tab'>Recent <sup><span id='recentCount'></span></sup></td>
             <td id='tabHistory' onclick='setTab("H")' class='tab'>History <sup><span id='historyCount'></span></sup></td></tr>
     </table>
@@ -32,10 +33,29 @@
     </table>
     </div>
 
+    <div id='locTV' style='display:none'>
+        <table style='width:100%'>
+            <tr>
+                <td style='width:370px; vertical-align: top;'>
+                    <div id='tvList' 
+                        style='position:relative;height:calc(100vh - 100px);width:calc(100% - 25px);overflow:auto;display:inline-block'>
+                    </div>
+                </td>
+                <td style='width:220px;vertical-align: top;'>
+                    <img class='cover' id='locTVCover'>
+                </td>
+                <td style='vertical-align: top;'>
+                    <div id='tvInfo'></div>
+                </td>
+            </tr>
+        </table>
+        </div>
+    
+
     <div id='locRecent' style='display:none'>
     <table style='width:100%'>
         <tr>
-            <td style='width:470px; vertical-align: top;'>
+            <td style='width:370px; vertical-align: top;'>
                 <div id='recentList' 
                     style='position:relative;height:calc(100vh - 100px);width:calc(100% - 25px);overflow:auto;display:inline-block'>
                 </div>

@@ -1,26 +1,35 @@
 let app = {
     priorMovieRow: -1,
+    priorShowRow: -1,
     currentTab: '',
     loadedTabs: {}
 }
 
 function init() {
+    window.movieIDs = {}; // Maps Movie ID to position in list
+    for (var i = 0; i < movieList.length; i++) {
+        movieIDs[movieList[i].id] = i;
+    }
     document.querySelector("#movieCount").innerHTML = movieList.length
+    document.querySelector("#tvCount").innerHTML = tvList.length
     document.querySelector("#recentCount").innerHTML = recentList.length
     document.querySelector("#historyCount").innerHTML = movieHistory.length
     setTab('R') // Start showing recent
 }
 function setTab(code) { // M/R/H
     document.querySelector("#locMovies").style.display = (code == 'M' ? "" : "none");
+    document.querySelector("#locTV").style.display = (code == 'T' ? "" : "none");
     document.querySelector("#locRecent").style.display = (code == 'R' ? "" : "none");
     document.querySelector("#locHistory").style.display = (code == 'H' ? "" : "none");
 
     document.querySelector("#tabMovies").className = (code != 'M' ? "tab" : "tab current");
+    document.querySelector("#tabTV").className = (code != 'T' ? "tab" : "tab current");
     document.querySelector("#tabRecent").className = (code != 'R' ? "tab" : "tab current");
     document.querySelector("#tabHistory").className = (code != 'H' ? "tab" : "tab current");
 
     if (app.loadedTabs[code] == undefined) {
         if (code == 'M') { showMovies(); }
+        if (code == 'T') { showTV(); }
         if (code == 'R') { showRecent(); }
         if (code == 'H') { showHistory(); }
         app.loadedTabs[code] = true;
@@ -29,13 +38,29 @@ function setTab(code) { // M/R/H
     app.currentTab = code;
 }
 
+function showTV() {
+    var spn = document.createElement("span");
+    var container = document.querySelector("#tvList");
+    for (var i = 0; i < tvList.length; i++) {
+        var div = document.createElement("div");
+        div.className = 'movie';
+        div.dataset['key'] = tvList[i].id;
+        div.innerHTML = tvList[i].title
+        div.onclick=showTVDetail
+        spn.append(div)
+    }
+    container.append(spn);
+    showTVDetail();
+
+}
+
 function showMovies() {
     var spn = document.createElement("span");
     var container = document.querySelector("#libList");
     for (var i = 0; i < movieList.length; i++) {
         var div = document.createElement("div");
         div.className = 'movie';
-        div.dataset['num'] = i;
+        div.dataset['key'] = movieList[i].id;
         div.innerHTML = movieList[i].title
         div.onclick=showMovieDetail
         spn.append(div)
@@ -52,7 +77,7 @@ function showRecent() {
         var mov = recentList[i];
         var div = document.createElement("div");
         div.className = 'movie';
-        div.dataset['num'] = i;
+        div.dataset['key'] = mov.id;
         div.innerHTML = mov.title + ' (' + mov.added + ")";
         div.onclick=showRecentDetail;
         spn.append(div);
@@ -82,12 +107,45 @@ function showHistory() {
 
 }
 
-function showMovieDetail(event) {
-    var num = 0;
-    if (event != undefined) {
-        num = event.srcElement.dataset["num"];
+function getPosition(list, id) {
+    var rslt = -1;
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].id == id) {
+            rslt = i;
+            break;    
+        }
     }
-    var mov = movieList[num];
+    return rslt;
+}
+function makeCollectionList(colname) {
+    var col = movieList.filter(m => {
+        if (m.collections == colname) {
+            return true;
+        }
+    }).sort((a,b) => {
+        return a.year > b.year ? 1 : -1
+    })
+
+    var rslt = "";
+    if (col.length > 0){
+        rslt = "<div style='position:relative; max-height: 5.6em; overflow-y: auto;'>"
+        rslt += "<ol style='margin-top:0;padding-top:0;margin-bottom:0;padding-botto:0'>";        
+        for (var i = 0; i < col.length; i++) {
+            rslt += "<li>" + col[i].year + ": " + col[i].title + "</li>";
+        }
+        rslt += "</ol>"
+        rslt += "</div>"
+    }
+    return rslt;
+}
+
+function showMovieDetail(event) {
+    var rownum = 0;
+    if (event != undefined) {
+        var key = event.srcElement.dataset["key"];
+        rownum = getPosition(movieList, key);
+    }
+    var mov = movieList[rownum];
 
     showDetail(
         mov, 
@@ -96,84 +154,40 @@ function showMovieDetail(event) {
         document.querySelector("#locMovieCover"),
         document.querySelector("#movieInfo"), 
         app.priorMovieRow,
-        num 
+        rownum 
     );
-
-    // document.querySelector("#locMovieCover").src = "./covers/" + mov.id + ".jpg";
-
-    // var info = "<b>" + mov.title + "</b>";
-    // info += "<br>Released in: " + mov.year;
-    // info += ", Loaded: " + mov.added;
-    // info += "<br>Genre: " + mov.genres;
-    // var dur = mov.duration;
-    // var hrs = parseInt(dur / (1000 * 60 * 60));
-    // dur -= (hrs * 1000 * 60 * 60);
-    // var mins = parseInt(dur / (1000 * 60));
-    // if (mins > 59) {
-    //     mins -= 60;
-    // }
-    // var z = (mins < 10 ? "0" : "")
-    // info += "<br>Duration: " + hrs + ":" + z + mins;
-    // if (mov.collections != "") info += "<br>Collection: " + mov.collections;
-    // if (mov.actors != "") {
-    //     info += "<ul><li>";
-    //     info += mov.actors.split(", ").join("</li><li>");
-    //     info += "</li></ul>";
-    // }
-    // info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
-    // document.querySelector("#movieInfo").innerHTML = info;
-    // var container = document.querySelector("#libList");
-    // if (app.priorMovieRow >= 0) {
-    //     container.children[0].children[app.priorMovieRow].className = "movie";
-    // }
-    // container.children[0].children[num].className = "movie current";
-    app.priorMovieRow = num;
+    app.priorMovieRow = rownum;
 }
 
-function OLDshowMovieDetail(event) {
-    var num = 0;
+function showTVDetail(event) {
+    var rownum = 0;
     if (event != undefined) {
-        num = event.srcElement.dataset["num"];
+        var key = event.srcElement.dataset["key"];
+        rownum = getPosition(tvList, key);
     }
-    var mov = movieList[num];
+    var show = tvList[rownum];
 
-    document.querySelector("#locMovieCover").src = "./covers/" + mov.id + ".jpg";
-
-    var info = "<b>" + mov.title + "</b>";
-    info += "<br>Released in: " + mov.year;
-    info += ", Loaded: " + mov.added;
-    info += "<br>Genre: " + mov.genres;
-    var dur = mov.duration;
-    var hrs = parseInt(dur / (1000 * 60 * 60));
-    dur -= (hrs * 1000 * 60 * 60);
-    var mins = parseInt(dur / (1000 * 60));
-    if (mins > 59) {
-        mins -= 60;
-    }
-    var z = (mins < 10 ? "0" : "")
-    info += "<br>Duration: " + hrs + ":" + z + mins;
-    if (mov.collections != "") info += "<br>Collection: " + mov.collections;
-    if (mov.actors != "") {
-        info += "<ul><li>";
-        info += mov.actors.split(", ").join("</li><li>");
-        info += "</li></ul>";
-    }
-    info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
-    document.querySelector("#movieInfo").innerHTML = info;
-    var container = document.querySelector("#libList");
-    if (app.priorMovieRow >= 0) {
-        container.children[0].children[app.priorMovieRow].className = "movie";
-    }
-    container.children[0].children[num].className = "movie current";
-    app.priorMovieRow = num;
+    showDetail(
+        show, 
+        document.querySelector("#tvList"), 
+        "TV",
+        document.querySelector("#locTVCover"),
+        document.querySelector("#tvInfo"), 
+        app.priorShowRow,
+        rownum 
+    );
+    app.priorShowRow = rownum;
 }
+
+
 
 function showRecentDetail(event) {
-    var num = 0;
+    var rownum = 0;
     if (event != undefined) {
-        num = event.srcElement.dataset["num"];
+        var key = event.srcElement.dataset["key"];
+        rownum = getPosition(recentList, key);
     }
-    var mov = recentList[num];
+    var mov = recentList[rownum];
 
     showDetail(
         mov, 
@@ -182,10 +196,10 @@ function showRecentDetail(event) {
         document.querySelector("#locRecentCover"),
         document.querySelector("#recentMovieInfo"), 
         app.priorRecentRow,
-        num 
+        rownum 
     );
     
-    app.priorRecentRow = num;
+    app.priorRecentRow = rownum;
 }
 
 function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
@@ -197,6 +211,7 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
+    if (typ == "TV") info += "<br>Episodes: " + mov.episodes;
     var dur = mov.duration;
     var hrs = parseInt(dur / (1000 * 60 * 60));
     dur -= (hrs * 1000 * 60 * 60);
@@ -213,7 +228,10 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
          }
          if (mins != 0) info += z + mins + "min";
     }
-    if (mov.collections != "") info += "<br>Collection: " + mov.collections;
+    if (mov.collections != "") {
+        info += "<br>Collection: " + mov.collections;
+        info += "<hr>" + makeCollectionList(mov.collections) + "<hr>";
+    }
     if (mov.actors != "") {
         info += "<ul><li>";
         info += mov.actors.split(", ").join("</li><li>");
@@ -228,7 +246,8 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         if (prior >= 0) {
             lst.children[0].children[prior].className = "movie";
         }
-        lst.children[0].children[newrow].className = "movie current";    
+        lst.children[0].children[newrow].className = "movie current"; 
+        //lst.children[0].children[newrow].scrollIntoView()
     // } else if (typ == "div") {
         // if (prior >= 0) {
             // lst.children[prior].className = "movie";
