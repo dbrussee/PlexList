@@ -211,7 +211,10 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
-    if (typ == "TV") info += "<br>Episodes: " + mov.episodes;
+    if (typ == "TV") {
+        info += "<br>" + mov.seasons + " seassons";
+        info += ", " + mov.episodes + " episodes";
+    }
     var dur = mov.duration;
     var hrs = parseInt(dur / (1000 * 60 * 60));
     dur -= (hrs * 1000 * 60 * 60);
