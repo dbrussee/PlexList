@@ -2,6 +2,10 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+ul, ol {
+    margin-top: 0; padding-top: 0;
+    margin-bottom: 0; padding-bottom: 0;
+}
 sup {
     font-size: .7em;
     padding: .1em .4em;
@@ -32,6 +36,11 @@ sup {
 fieldset {
     border-color: sienna;
     border-radius: .6em;
+    margin-top: .3em;
+}
+fieldset legend {
+    font-style: italic;
+    padding: 0 .5em;
 }
 .cover {
     margin-left: 1em; margin-right: 1em;

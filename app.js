@@ -127,14 +127,16 @@ function makeCollectionList(colname) {
     })
 
     var rslt = "";
-    if (col.length > 0){
-        rslt = "<div style='position:relative; max-height: 5.6em; overflow-y: auto;'>"
+    if (col.length > 0) {
+        rslt += "<fieldset><legend>" + colname + " Collection (" + col.length + ")</legend>";
+        rslt += "<div style='position:relative; max-height: 5.6em; overflow-y: auto;'>"
         rslt += "<ol style='margin-top:0;padding-top:0;margin-bottom:0;padding-botto:0'>";        
         for (var i = 0; i < col.length; i++) {
             rslt += "<li>" + col[i].year + ": " + col[i].title + "</li>";
         }
         rslt += "</ol>"
         rslt += "</div>"
+        rslt += "</fieldset>";
     }
     return rslt;
 }
@@ -212,49 +214,51 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     info += "Loaded: " + mov.added;
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
     if (typ == "TV") {
-        info += "<br>" + mov.seasons + " seassons";
-        info += ", " + mov.episodes + " episodes";
+        info += "<fieldset><legend>Seasons</legend>";
+        info += "<ul>";
+        for (var i = 0; i < mov.seasons.length; i++) {
+            info += "<li>" + mov.seasons[i] + "</li>";
+        }
+        info += "</ul>";
+        info += "</fieldset>";
+    } else {
+        var dur = mov.duration;
+        var hrs = parseInt(dur / (1000 * 60 * 60));
+        dur -= (hrs * 1000 * 60 * 60);
+        var mins = parseInt(dur / (1000 * 60));
+        if (mins > 59) {
+            mins -= 60;
+        }
+        var z = (mins < 10 ? "0" : "")
+        if (hrs != 0 && mins != 0) {
+            info += "<br>Duration: "
+            if (hrs != 0) {
+                info += hrs + "hr";
+                if (mins != 0) info += " ";
+             }
+             if (mins != 0) info += z + mins + "min";
+        }    
     }
-    var dur = mov.duration;
-    var hrs = parseInt(dur / (1000 * 60 * 60));
-    dur -= (hrs * 1000 * 60 * 60);
-    var mins = parseInt(dur / (1000 * 60));
-    if (mins > 59) {
-        mins -= 60;
-    }
-    var z = (mins < 10 ? "0" : "")
-    if (hrs != 0 && mins != 0) {
-        info += "<br>Duration: "
-        if (hrs != 0) {
-            info += hrs + "hr";
-            if (mins != 0) info += " ";
-         }
-         if (mins != 0) info += z + mins + "min";
-    }
-    if (mov.collections != "") {
-        info += "<br>Collection: " + mov.collections;
-        info += "<hr>" + makeCollectionList(mov.collections) + "<hr>";
-    }
-    if (mov.actors != "") {
-        info += "<ul><li>";
-        info += mov.actors.split(", ").join("</li><li>");
-        info += "</li></ul>";
-    }
-    
     if (mov.summary != "") {
         info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
     }
+    if (mov.collections != "") {
+        info += makeCollectionList(mov.collections);
+    }
+    if (mov.actors != "") {
+        var list = mov.actors.split(",");
+        info += "<fieldset><legend>Actors / Roles (" + list.length + ")</legend>";
+        info += "<div style='position:relative; max-height: 5.6em; overflow-y: auto;'>";
+        info += "<ul><li>";
+        info += list.join("</li><li>");
+        info += "</li></ul>";
+        info += "</div>";
+        info += "</fieldset>";
+    }
+    
     txtloc.innerHTML = info;
-    // if (typ == "table") {
         if (prior >= 0) {
             lst.children[0].children[prior].className = "movie";
         }
         lst.children[0].children[newrow].className = "movie current"; 
-        //lst.children[0].children[newrow].scrollIntoView()
-    // } else if (typ == "div") {
-        // if (prior >= 0) {
-            // lst.children[prior].className = "movie";
-        // }
-        // lst.children[newrow].className = "movie current";    
-    // }
 }
