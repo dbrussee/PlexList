@@ -242,9 +242,6 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     if (mov.summary != "") {
         info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
     }
-    if (mov.collections != "") {
-        info += makeCollectionList(mov.collections);
-    }
     if (mov.actors != "") {
         var list = mov.actors.split(",");
         info += "<fieldset><legend>Actors / Roles (" + list.length + ")</legend>";
@@ -254,6 +251,9 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         info += "</li></ul>";
         info += "</div>";
         info += "</fieldset>";
+    }
+    if (mov.collections != "") {
+        info += makeCollectionList(mov.collections);
     }
     
     txtloc.innerHTML = info;
