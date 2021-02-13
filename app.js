@@ -14,9 +14,9 @@ function init() {
     document.querySelector("#tvCount").innerHTML = tvList.length
     document.querySelector("#recentCount").innerHTML = recentList.length
     document.querySelector("#historyCount").innerHTML = movieHistory.length
-    setTab('R') // Start showing recent
+    setTab('M') // Start showing movie list
 }
-function setTab(code) { // M/R/H
+function setTab(code) { // M/T/R/H
     document.querySelector("#locMovies").style.display = (code == 'M' ? "" : "none");
     document.querySelector("#locTV").style.display = (code == 'T' ? "" : "none");
     document.querySelector("#locRecent").style.display = (code == 'R' ? "" : "none");
