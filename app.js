@@ -212,7 +212,6 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     info += "<br>";
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
-    info += ", Resolution: " + mov.resolution;
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
     if (typ == "TV") {
         info += "<fieldset><legend>Seasons</legend>";
@@ -223,6 +222,7 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         info += "</ul>";
         info += "</fieldset>";
     } else {
+        durline = ""
         var dur = mov.duration;
         var hrs = parseInt(dur / (1000 * 60 * 60));
         dur -= (hrs * 1000 * 60 * 60);
@@ -232,13 +232,18 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         }
         var z = (mins < 10 ? "0" : "")
         if (hrs != 0 && mins != 0) {
-            info += "<br>Duration: "
+            durline += "<br>Duration: "
             if (hrs != 0) {
-                info += hrs + "hr";
-                if (mins != 0) info += " ";
+                durline += hrs + "hr";
+                if (mins != 0) durline += " ";
              }
-             if (mins != 0) info += z + mins + "min";
+             if (mins != 0) durline += z + mins + "min";
         }    
+        if (durline == "") {
+            info += "<br>Resolution: " + mov.resolution
+        } else {
+            info += durline + ", Resolution: " + mov.resolution
+        }
     }
     if (mov.summary != "") {
         info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
