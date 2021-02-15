@@ -213,15 +213,7 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
-    if (typ == "TV") {
-        info += "<fieldset><legend>Seasons</legend>";
-        info += "<ul>";
-        for (var i = 0; i < mov.seasons.length; i++) {
-            info += "<li>" + mov.seasons[i] + "</li>";
-        }
-        info += "</ul>";
-        info += "</fieldset>";
-    } else {
+    if (typ != "TV") {
         durline = ""
         var dur = mov.duration;
         var hrs = parseInt(dur / (1000 * 60 * 60));
@@ -246,8 +238,30 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         }
     }
     if (mov.summary != "") {
-        info += "<fieldset><legend>Summary</legend>" + mov.summary + "</fieldset>";
+        info += "<fieldset><legend>Summary</legend>"
+        info += "<div style='position:relative; max-height: 7.6em; overflow-y: auto;'>";
+        info += mov.summary;
+        info += "</div></fieldset>";
     }
+    if (typ == "TV") {
+        info += "<fieldset><legend>Seasons</legend>";
+        info += "<div style='position:relative; max-height: 5.6em; overflow-y: auto;'>";
+        info += "<ul>";
+        for (var i = 0; i < mov.seasons.length; i++) {
+            var season = mov.seasons[i];
+            info += "<li>" + season.title;
+            info += "<ul>"
+            for (var j = 0; j < season.episodes.length; j++) {
+                var epi = season.episodes[j]
+                info += "<li>" + epi.episode + ": " + epi.title + "</li>"
+            }
+            info += "</ul></li>";
+        }
+        info += "</ul>";
+        info += "</div>"
+        info += "</fieldset>";
+    }
+
     if (mov.actors != "") {
         var list = mov.actors.split(",");
         info += "<fieldset><legend>Actors / Roles (" + list.length + ")</legend>";
