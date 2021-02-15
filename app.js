@@ -42,16 +42,39 @@ function showTV() {
     var spn = document.createElement("span");
     var container = document.querySelector("#tvList");
     for (var i = 0; i < tvList.length; i++) {
+        var show = tvList[i];
         var div = document.createElement("div");
         div.className = 'movie';
-        div.dataset['key'] = tvList[i].id;
-        div.innerHTML = tvList[i].title
+        div.dataset['key'] = show.id;
+        div.innerHTML = show.title
         div.onclick=showTVDetail
         spn.append(div)
+        var div2 = document.createElement("div");
+        div2.className = "episodesContainer";
+        div2.style.display = "none";
+        for (var j = 0; j < show.seasons.length; j++) {
+            var season = show.seasons[j]
+            for (var k = 0; k < season.episodes.length; k++) {
+                var episode = season.episodes[k]
+                var div3 = document.createElement("div");
+                div3.className = 'episode';
+                div3.dataset['key'] = i + "," + j + "," + k;
+                div3.innerHTML = "... " + episode.episode + ": " + episode.title
+                div3.onclick=showTVEpisodeDetail
+                div2.appendChild(div3)
+                //spn.append(div)        
+            }
+        }
+        div.appendChild(div2)
     }
     container.append(spn);
     showTVDetail();
 
+}
+
+function showTVEpisodeDetail(event) {
+    event.cancelBubble = true;
+    showEpisodeDetails(event)
 }
 
 function showMovies() {
@@ -205,6 +228,8 @@ function showRecentDetail(event) {
 }
 
 function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
+    document.getElementById("episodeInfo").innerHTML = ""; // Clear episode info
+
     img.src = "./covers/" + mov.id + ".jpg";
 
     var info = "<b>" + mov.title + "</b>";
@@ -243,7 +268,7 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
         info += mov.summary;
         info += "</div></fieldset>";
     }
-    if (typ == "TV") {
+    if (typ == "XXXXXTV") {
         info += "<fieldset><legend>Seasons</legend>";
         info += "<div style='position:relative; max-height: 5.6em; overflow-y: auto;'>";
         info += "<ul>";
@@ -277,8 +302,37 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     }
     
     txtloc.innerHTML = info;
-        if (prior >= 0) {
-            lst.children[0].children[prior].className = "movie";
-        }
-        lst.children[0].children[newrow].className = "movie current"; 
+
+    if (prior >= 0) {
+        var div = lst.children[0].children[prior]
+        div.className = "movie";
+        if (div.children.length > 0) div.children[0].style.display = "none";
+    }
+    var div = lst.children[0].children[newrow]
+    div.className = "movie current"; 
+    if (div.children.length > 0) div.children[0].style.display = "block";
+}
+
+function showEpisodeDetails(event) {
+    var els = document.getElementsByClassName("currentEpisode");
+    for (var i = 0; i < els.length; i++) {
+        els[i].classList.remove("currentEpisode");
+    }
+    var el = event.srcElement;
+    el.classList.add("currentEpisode")
+    var locs = el.dataset["key"].split(",");
+    var show = tvList[locs[0]]
+    var season = show.seasons[locs[1]]
+    var episode = season.episodes[locs[2]]
+    var info = "<fieldset><legend>Episode " + episode.episode + ": " + episode.title + "</legend>";
+    info += "<table style='width:100%'><tr><td style='vertical-align:top'>"
+    info += "<img style='border:2px solid black' height=150 src='./covers/" + season.id + ".jpg'>";
+    info += "</td><td style='vertical-align:top'>";
+    info += "<div style='margin-left:.2em;position:relative; max-height: 300px; overflow-y: auto;'>";
+    info += episode.summary;
+    info += "</div>";
+    info += "</td></tr></table></fieldset>";
+    document.getElementById("episodeInfo").innerHTML = info;
+
+
 }

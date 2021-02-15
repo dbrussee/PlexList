@@ -33,6 +33,12 @@ sup {
     padding: .6em .2em;
     border-bottom: 1px dotted silver;
 }
+.episode {
+    background-color: white;
+    cursor: pointer;
+    padding: .6em .2em; padding-left: 2em;
+    border-bottom: 1px dotted silver;
+}
 fieldset {
     border-color: sienna;
     border-radius: .6em;
@@ -48,6 +54,22 @@ fieldset legend {
     border: .2em solid black;
     box-shadow: .3em .3em .3em gray;
 }
+.seasonCover {
+    margin-left: 1em; margin-right: 1em;
+    margin-top: .4em;
+    height: 200px;
+    border: .2em solid black;
+    box-shadow: .3em .3em .3em gray;
+}
 .current {
+    background-color: lightcyan;
+}
+.episode.currentEpisode {
     background-color: papayawhip;
+}
+.episodesContainer {
+    position: relative;
+    bottom: 0;
+    margin-bottom: -1em;
+    margin-top: 1em;
 }
