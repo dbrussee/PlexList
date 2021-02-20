@@ -54,16 +54,20 @@ function showTV() {
         div2.style.display = "none";
         for (var j = 0; j < show.seasons.length; j++) {
             var season = show.seasons[j]
+            var divS = document.createElement('div');
+            divS.innerHTML = season.title + "<br>";
+            divS.className = "season";
             for (var k = 0; k < season.episodes.length; k++) {
                 var episode = season.episodes[k]
                 var div3 = document.createElement("div");
                 div3.className = 'episode';
                 div3.dataset['key'] = i + "," + j + "," + k;
-                div3.innerHTML = "... " + episode.episode + ": " + episode.title
+                div3.innerHTML = episode.episode;// + ": " + episode.title
                 div3.onclick=showTVEpisodeDetail
-                div2.appendChild(div3)
+                divS.appendChild(div3)
                 //spn.append(div)        
             }
+            div2.appendChild(divS)
         }
         div.appendChild(div2)
     }
@@ -229,6 +233,10 @@ function showRecentDetail(event) {
 
 function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     document.getElementById("episodeInfo").innerHTML = ""; // Clear episode info
+    var els = document.getElementsByClassName("currentEpisode");
+    for (var i = 0; i < els.length; i++) {
+        els[i].classList.remove("currentEpisode");
+    }
 
     img.src = "./covers/" + mov.id + ".jpg";
 

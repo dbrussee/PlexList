@@ -33,7 +33,7 @@ sup {
     padding: .6em .2em;
     border-bottom: 1px dotted silver;
 }
-.episode {
+.season {
     background-color: white;
     cursor: pointer;
     padding: .6em .2em; padding-left: 2em;
@@ -64,12 +64,22 @@ fieldset legend {
 .current {
     background-color: lightcyan;
 }
-.episode.currentEpisode {
-    background-color: papayawhip;
-}
 .episodesContainer {
     position: relative;
     bottom: 0;
     margin-bottom: -1em;
     margin-top: 1em;
+}
+
+.episode {
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    background-color: linen;
+    padding: .3em 0;
+}
+.episode.currentEpisode {
+    background-color: aqua;
+    color: brown;
+    border-radius: .4em;
 }
