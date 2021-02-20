@@ -55,7 +55,10 @@ function showTV() {
         for (var j = 0; j < show.seasons.length; j++) {
             var season = show.seasons[j]
             var divS = document.createElement('div');
-            divS.innerHTML = season.title + "<br>";
+            var divSTitle = document.createElement('div');
+            divSTitle.className = "seasonTitle";
+            divSTitle.innerHTML = season.title;
+            div2.appendChild(divSTitle);
             divS.className = "season";
             for (var k = 0; k < season.episodes.length; k++) {
                 var episode = season.episodes[k]

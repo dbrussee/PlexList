@@ -38,8 +38,14 @@ sup {
 .season {
     background-color: white;
     cursor: pointer;
-    padding: .6em .2em; padding-left: 2em;
+    padding: .6em .2em; padding-left: 1em;
     border-bottom: 1px dotted silver;
+}
+.seasonTitle {
+    font-style: italic;
+    padding-top: .3em;
+    padding-left: .7em;
+    background-color: white;
 }
 fieldset {
     border-color: sienna;
