@@ -31,7 +31,9 @@ sup {
 .movie {
     cursor: pointer;
     padding: .6em .2em;
+    padding-left: 1em;
     border-bottom: 1px dotted silver;
+    position: relative;
 }
 .season {
     background-color: white;
@@ -77,6 +79,18 @@ fieldset legend {
     text-align: center;
     background-color: linen;
     padding: .3em 0;
+    position: relative;
+}
+.watched::after {
+    content: '';
+    display: block;
+    height: .4em;
+    width: .4em;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
 }
 .episode.currentEpisode {
     background-color: aqua;
