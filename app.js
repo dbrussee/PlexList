@@ -235,7 +235,22 @@ function showRecentDetail(event) {
     
     app.priorRecentRow = rownum;
 }
-
+function formatDuration(dur) {
+    var durline = "";
+    var hrs = parseInt(dur / (1000 * 60 * 60));
+    if (isNaN(hrs)) return "";
+    dur -= (hrs * 1000 * 60 * 60);
+    var mins = parseInt(dur / (1000 * 60));
+    if (mins > 59) {
+        mins -= 60;
+    }
+    var z = (mins < 10 ? "0" : "")
+    if (hrs > 0) {
+        durline += hrs + "hr ";
+    }
+    durline += z + mins + "min";
+    return durline;
+}
 function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     document.getElementById("episodeInfo").innerHTML = ""; // Clear episode info
     var els = document.getElementsByClassName("currentEpisode");
@@ -250,25 +265,12 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     info += "<br>";
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
-    if (typ != "TV" && mov.lastViewed != "") info += " <i style='color:tomato'>*** Watched " + mov.lastViewed + " ***</i>"
+    if (typ != "TV" && mov.lastViewed != undefined && mov.lastViewed != "") info += " <i style='color:tomato'>*** Watched " + mov.lastViewed + " ***</i>"
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
     if (typ != "TV") {
-        durline = ""
-        var dur = mov.duration;
-        var hrs = parseInt(dur / (1000 * 60 * 60));
-        dur -= (hrs * 1000 * 60 * 60);
-        var mins = parseInt(dur / (1000 * 60));
-        if (mins > 59) {
-            mins -= 60;
-        }
-        var z = (mins < 10 ? "0" : "")
-        if (hrs != 0 && mins != 0) {
-            durline += "<br>Duration: "
-            if (hrs != 0) {
-                durline += hrs + "hr";
-                if (mins != 0) durline += " ";
-             }
-             if (mins != 0) durline += z + mins + "min";
+        durline = formatDuration(mov.duration);
+        if (durline != "") {
+            durline = "<br>Length: " + durline
         }    
         if (durline == "") {
             info += "<br>Resolution: " + mov.resolution
@@ -345,7 +347,11 @@ function showEpisodeDetails(event) {
     info += " height=150 src='./covers/" + season.id + ".jpg'>";
     info += "</td><td style='vertical-align:top'>";
     info += "<div style='margin-left:.2em;position:relative; max-height: 300px; overflow-y: auto;'>";
-    if (episode.lastViewed != "") info += "<i style='color:tomato;'>*** Watched " + episode.lastViewed + " ***</i><br>"
+    if (episode.airdate != "") info += "Original air date: " + episode.airdate + "";
+    if (episode.lastViewed != "") info += " <i style='color:tomato;'>*** Watched " + episode.lastViewed + " ***</i><br>"
+    var durline = formatDuration(episode.duration);
+    info += "Length: " + durline + ", Resolution: " + episode.resolution + "<br>";
+    info += "<hr>";
     info += episode.summary;
     info += "</div>";
     info += "</td></tr></table></fieldset>";
