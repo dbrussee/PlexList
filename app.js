@@ -350,7 +350,7 @@ function showEpisodeDetails(event) {
     if (episode.airdate != "") info += "Original air date: " + episode.airdate + "";
     if (episode.lastViewed != "") info += " <i style='color:tomato;'>*** Watched " + episode.lastViewed + " ***</i><br>"
     var durline = formatDuration(episode.duration);
-    info += "Length: " + durline + ", Resolution: " + episode.resolution + "<br>";
+    info += "<br>Length: " + durline + ", Resolution: " + episode.resolution + "<br>";
     info += "<hr>";
     info += episode.summary;
     info += "</div>";
