@@ -250,7 +250,7 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     info += "<br>";
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
-    if (mov.views > 0) info += " <i style='color:tomato'>*** Watched ***</i>"
+    if (mov.lastViewed != "") info += " <i style='color:tomato'>*** Watched " + mov.lastViewed + " ***</i>"
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
     if (typ != "TV") {
         durline = ""
@@ -345,7 +345,7 @@ function showEpisodeDetails(event) {
     info += " height=150 src='./covers/" + season.id + ".jpg'>";
     info += "</td><td style='vertical-align:top'>";
     info += "<div style='margin-left:.2em;position:relative; max-height: 300px; overflow-y: auto;'>";
-    if (episode.views > 0) info += "<i style='color:tomato;'>*** Watched ***</i><br>"
+    if (episode.lastViewed != "") info += "<i style='color:tomato;'>*** Watched " + episode.lastViewed + " ***</i><br>"
     info += episode.summary;
     info += "</div>";
     info += "</td></tr></table></fieldset>";
