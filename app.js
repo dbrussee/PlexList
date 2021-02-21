@@ -347,8 +347,8 @@ function showEpisodeDetails(event) {
     info += " height=150 src='./covers/" + season.id + ".jpg'>";
     info += "</td><td style='vertical-align:top'>";
     info += "<div style='margin-left:.2em;position:relative; max-height: 300px; overflow-y: auto;'>";
-    if (episode.airdate != "") info += "Original air date: " + episode.airdate + "";
-    if (episode.lastViewed != "") info += " <i style='color:tomato;'>*** Watched " + episode.lastViewed + " ***</i><br>"
+    info += "Aired: " + episode.airdate + "";
+    if (episode.lastViewed != "") info += " <i style='color:tomato;'>*** Watched " + episode.lastViewed + " ***</i>"
     var durline = formatDuration(episode.duration);
     info += "<br>Length: " + durline + ", Resolution: " + episode.resolution + "<br>";
     info += "<hr>";
