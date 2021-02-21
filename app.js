@@ -66,7 +66,7 @@ function showTV() {
                 div3.className = "episode";
                 if (episode.views > 0) div3.className += " watched"
                 div3.dataset['key'] = i + "," + j + "," + k;
-                div3.innerHTML = episode.episode;// + ": " + episode.title
+                div3.innerHTML = "#" + episode.index;// + ": " + episode.title
                 div3.onclick=showTVEpisodeDetail
                 divS.appendChild(div3)
                 //spn.append(div)        
@@ -81,7 +81,7 @@ function showTV() {
 }
 
 function showTVEpisodeDetail(event) {
-    event.cancelBubble = true;
+    if (event != undefined) event.cancelBubble = true;
     showEpisodeDetails(event)
 }
 
@@ -211,6 +211,7 @@ function showTVDetail(event) {
         rownum 
     );
     app.priorShowRow = rownum;
+
 }
 
 
@@ -334,7 +335,12 @@ function showEpisodeDetails(event) {
     for (var i = 0; i < els.length; i++) {
         els[i].classList.remove("currentEpisode");
     }
-    var el = event.srcElement;
+    var el = null;
+    if (event == undefined) {
+
+    } else {
+        var el = event.srcElement;
+    }
     el.classList.add("currentEpisode")
     var locs = el.dataset["key"].split(",");
     var show = tvList[locs[0]]

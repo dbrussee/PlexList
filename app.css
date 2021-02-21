@@ -63,6 +63,7 @@ fieldset legend {
     box-shadow: .3em .3em .3em gray;
 }
 .seasonCover {
+    position: absolute;
     margin-left: 1em; margin-right: 1em;
     margin-top: .4em;
     height: 200px;
@@ -78,13 +79,18 @@ fieldset legend {
     margin-bottom: -1em;
     margin-top: 1em;
 }
+#locSeasonCovers {
+    position: relative;
+    background-color: red;
+}
+
 
 .episode {
     display: inline-block;
-    width: 25%;
+    width: 16.5%;
     text-align: center;
     background-color: linen;
-    padding: .3em 0;
+    padding: .4em 0;
     position: relative;
 }
 .watched::after {
