@@ -250,7 +250,7 @@ function showDetail(mov, lst, typ, img, txtloc, prior, newrow) {
     info += "<br>";
     if (mov.year != "") info += "Released in: " + mov.year + ", ";
     info += "Loaded: " + mov.added;
-    if (mov.lastViewed != "") info += " <i style='color:tomato'>*** Watched " + mov.lastViewed + " ***</i>"
+    if (typ != "TV" && mov.lastViewed != "") info += " <i style='color:tomato'>*** Watched " + mov.lastViewed + " ***</i>"
     if (mov.genres != "") info += "<br>Genre: " + mov.genres;
     if (typ != "TV") {
         durline = ""
