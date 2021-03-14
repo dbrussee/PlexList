@@ -1,4 +1,7 @@
-movieHistory = [{"title": "The Equalizer 2", "vday": "Sat", "vdate": "02/27/2021", "vtime": "8:52pm", "other": ""},
+movieHistory = [{"title": "Gifted Hands: The Ben Carson Story", "vday": "Sat", "vdate": "03/13/2021", "vtime": "8:01pm", "other": ""},
+{"title": "Chicago P.D. / Protect and Serve", "vday": "Sat", "vdate": "03/13/2021", "vtime": "12:20pm", "other": "(season 8 episode 8)"},
+{"title": "Chicago P.D. / Protect and Serve", "vday": "Sat", "vdate": "03/13/2021", "vtime": "12:13pm", "other": "(season 8 episode 8)"},
+{"title": "The Equalizer 2", "vday": "Sat", "vdate": "02/27/2021", "vtime": "8:52pm", "other": ""},
 {"title": "The Equalizer", "vday": "Sat", "vdate": "02/27/2021", "vtime": "12:56pm", "other": ""},
 {"title": "Hillbilly Elegy", "vday": "Sun", "vdate": "02/14/2021", "vtime": "7:45pm", "other": ""},
 {"title": "A Glitch in the Matrix", "vday": "Sat", "vdate": "02/13/2021", "vtime": "8:09pm", "other": ""},
