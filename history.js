@@ -1,4 +1,5 @@
-movieHistory = [{"title": "The Marksman", "vday": "Sat", "vdate": "05/01/2021", "vtime": "12:54pm", "other": ""},
+movieHistory = [{"title": "Those Who Wish Me Dead", "vday": "Sat", "vdate": "05/22/2021", "vtime": "8:41pm", "other": ""},
+{"title": "The Marksman", "vday": "Sat", "vdate": "05/01/2021", "vtime": "12:54pm", "other": ""},
 {"title": "The Comeback Trail", "vday": "Sat", "vdate": "04/17/2021", "vtime": "7:08pm", "other": ""},
 {"title": "NCIS: Los Angeles / War Crimes", "vday": "Mon", "vdate": "04/12/2021", "vtime": "7:09pm", "other": "(season 12 episode 2)"},
 {"title": "The Blacklist / The Stewmaker", "vday": "Sun", "vdate": "04/11/2021", "vtime": "7:54pm", "other": "(season 1 episode 4)"},
