@@ -1,4 +1,5 @@
-movieHistory = [{"title": "Infinite", "vday": "Sat", "vdate": "06/12/2021", "vtime": "7:38pm", "other": ""},
+movieHistory = [{"title": "The Misfits", "vday": "Sun", "vdate": "06/20/2021", "vtime": "7:18pm", "other": ""},
+{"title": "Infinite", "vday": "Sat", "vdate": "06/12/2021", "vtime": "7:38pm", "other": ""},
 {"title": "Wind", "vday": "Sat", "vdate": "06/05/2021", "vtime": "2:11pm", "other": ""},
 {"title": "Wrath of Man", "vday": "Mon", "vdate": "05/31/2021", "vtime": "4:28pm", "other": ""},
 {"title": "The Equalizer (2021) / Reckoning ", "vday": "Sun", "vdate": "05/30/2021", "vtime": "1:13pm", "other": "(season 1 episode 10)"},
